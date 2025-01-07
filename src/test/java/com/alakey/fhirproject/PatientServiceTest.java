@@ -17,15 +17,14 @@ class PatientServiceTest {
     void testGetPatientById() {
         PatientRepository mockRepository = Mockito.mock(PatientRepository.class);
         PatientService patientService = new PatientServiceImpl(mockRepository);
-
         PatientModel mockPatient = new PatientModel();
         mockPatient.setId("1");
-        mockPatient.setName("John Doe");
-
+        PatientModel.Name name = new PatientModel.Name();
+        name.setFamily("John Doe");
+        mockPatient.setName(name);
         Mockito.when(mockRepository.findById("1")).thenReturn(Optional.of(mockPatient));
-
         PatientModel result = patientService.getPatientById("1");
 
-        assertEquals("John Doe", result.getName());
+        assertEquals("John Doe", result.getName().getFamily());
     }
 }
